@@ -6,7 +6,7 @@
             <Page id="page" title="{i18n>title}">
                 <content>
                     <Label text="aa"></Label>
-                    <Label text="{/root}"></Label>
+                    <Label text="{/}"></Label>
                 </content>
             </Page>
         </pages>
