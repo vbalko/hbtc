@@ -4,7 +4,10 @@
     <App>
         <pages>
             <Page id="page" title="{i18n>title}">
-                <content></content>
+                <content>
+                    <Label text="aa"></Label>
+                    <Label text="{/root}"></Label>
+                </content>
             </Page>
         </pages>
     </App>
