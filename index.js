@@ -16,11 +16,14 @@ const d3 = require('d3-fetch');
 
 //aa();
 
-const express = require('express');
+//const express = require('express');
 
-const app = express();
+const express = require('./services/express');
+const api = require('./api');
 
-app.use(express.static(__dirname));
+const app = express(api,__dirname);
+
+//app.use(express.static(__dirname));
 
 
   //app.use(express.logger('dev'));
