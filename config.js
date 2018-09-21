@@ -1,0 +1,47 @@
+const path = require('path');
+
+const requireProcessEnv = (name) => {
+	if (!process.env[name]) {
+		throw new Error('You must set the ' + name + ' enviroment variable');
+	}
+	return process.env[name];
+};
+
+if (process.env.NODE_ENV !== 'production') {
+	const dotenv = require('dotenv-safe');
+	dotenv.load({
+		path: path.join(__dirname, '.env'),
+		sample: path.join(__dirname, '.env.example')
+	});
+}
+
+const config = {
+	all: {
+		env: process.env.NODE_ENV || 'development',
+		port: process.env.port || 4000,
+		apiRoot: process.env.apiRoot || '/',
+		logDir: 'log',
+		masterKey: requireProcessEnv('MASTER_KEY'),
+		// ib: {
+		//     publicKey: requireProcessEnv("IB_PUBLIC"),
+		//     privateKey: requireProcessEnv("IB_PRIVATE")
+		// },
+		mongo: {
+			options: {
+				db: {
+					safe: true
+				}
+			}
+		}
+	},
+	development: {
+		mongo: {
+			uri: requireProcessEnv('MONGO_URI'),
+			options: {
+				debug: false
+			}
+		}
+	}
+};
+
+module.exports = Object.assign(config.all, config[config.all.env]);
