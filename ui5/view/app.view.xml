@@ -1,12 +1,38 @@
 <mvc:View controllerName="sap.ui.demo.basicTemplate.controller.App" 
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true" 
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table">
     <App>
         <pages>
             <Page id="page" title="{i18n>title}">
                 <content>
-                    <Label text="aa"></Label>
-                    <Label text="{/}"></Label>
+                    <Table items="{/}"
+                           title="Symbols">
+                        <columns>
+                            <Column>
+                                <Text text="Symbol" wrapping="false" />                               
+                            </Column>
+                            <Column>
+                                <Text text="Price" wrapping="false" />
+                            </Column>
+                            <Column>
+                                <Text text="Volume" wrapping="false" />
+                            </Column>                            
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{symbol}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{last}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{volume}" />
+                                </cells>                                                                 
+                            </ColumnListItem>
+                        </items>
+                    </Table>
                 </content>
             </Page>
         </pages>

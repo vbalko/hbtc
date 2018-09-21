@@ -17,9 +17,20 @@ router.get("/api",async (req,res) => res.json(
 ));
 
 async function getData() {
-    const tickers = await d3.json("https://api.hitbtc.com/api/2/public/ticker");
-    const aSymbols = await tickers.map((item) => item.symbol);
-    return await aSymbols;
+    try {
+        const tickers = await d3.json("https://api.hitbtc.com/api/2/public/ticker");
+        const aSymbols = await tickers.
+            filter((item) => item.symbol.includes('ETH')).
+            map((item) => { item.symbol = item.symbol.indexOf('ETH') == 0 ? item.symbol.replace('ETH', 'ETH/'): item.symbol.replace('ETH','/ETH')
+                            return item});
+        return await aSymbols;
+    } catch (err) {
+        const problem = "Nepovedlo se nacist public/ticker. ";
+        console.log("problem: ",problem+err);
+        return {"problem":problem+err};
+    }
+
+
 }
 
 var handleRoot = (req,res) => {
