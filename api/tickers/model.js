@@ -10,13 +10,17 @@ const tickersSchema = new Schema({
 		type: String,
 		required: true,
 		unique: true,
+		index: true,
 		trim: true,
 		//lowercase: true
 	},
 	symbolExt: {
 		type: String,
-		index: true,
+		// index: true,
 		trim: true
+	},
+	lastTickerTimestamp: {
+		type: Date,
 	},
 	dataRaw: [
 		{
@@ -73,5 +77,5 @@ tickersSchema.methods = {
 
 const model = mongoose.model('Tickers', tickersSchema);
 
-export const schema = model.schema;
+exports.schema = model.schema;
 module.exports =  model;

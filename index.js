@@ -1,4 +1,4 @@
-const d3 = require('d3-fetch');
+//const d3 = require('d3-fetch');
 // if (typeof fetch !== "function") {
 //   global.fetch = require("node-fetch-polyfill");
 // }
@@ -20,14 +20,19 @@ const d3 = require('d3-fetch');
 
 const express = require('./services/express');
 const api = require('./api');
+const mongoose = require('./services/mongoose');
+const mongoConfig = require('./config').mongo;
 
 const app = express(api,__dirname);
+console.log(mongoConfig.uri);
+mongoose.connect(mongoConfig.uri);
+mongoose.Promise = global.Promise;
 
 //app.use(express.static(__dirname));
 
 
-  //app.use(express.logger('dev'));
-  //app.use(express.bodyParser());
+//app.use(express.logger('dev'));
+//app.use(express.bodyParser());
 
 
 app.listen(4000);

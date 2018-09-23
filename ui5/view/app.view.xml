@@ -22,7 +22,7 @@
 						<items>
 							<ColumnListItem>
 								<cells>
-									<Text text="{symbol_ext}" />
+									<Text text="{symbolExt}" />
 								</cells>
 								<cells>
 									<Text text="{last}" />
