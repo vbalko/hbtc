@@ -32,7 +32,7 @@ class HitBTC {
 					item.symbolExt = item.symbol.indexOf('ETH') == 0 ? item.symbol.replace('ETH', 'ETH/') : item.symbol.replace('ETH', '/ETH');
 					return item;
 				});
-			tickersUtils.processTickers(tickers);
+			tickersUtils.processTickers(aSymbols);
 			return await aSymbols;			
 		} catch (err) {
 			const problem = 'Problem: hitbtc.js getTickers '+err;

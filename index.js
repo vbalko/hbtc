@@ -25,7 +25,7 @@ const mongoConfig = require('./config').mongo;
 
 const app = express(api,__dirname);
 console.log(mongoConfig.uri);
-mongoose.connect(mongoConfig.uri);
+mongoose.connect(mongoConfig.uri, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 //app.use(express.static(__dirname));
