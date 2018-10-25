@@ -1,19 +1,25 @@
-const d3 = require('d3-fetch');
+// const d3 = require('d3-fetch');
+const req = require('request-promise');
 const tickersUtils = require('../../api/tickers/utils');
 
 
 class HitBTC {
 	constructor() {
-		if (typeof fetch !== 'function') {
-			global.fetch = require('node-fetch-polyfill');
-		}
+		// if (typeof fetch !== 'function') {
+		// 	global.fetch = require('node-fetch-polyfill');
+		// }
 		this.apiURL = 'https://api.hitbtc.com/api/2/public/';
 	}
 
 	async get(action) {
 		//let dataJSON = JSON.stringify(data);
 		try {
-			const response = await d3.json('https://api.hitbtc.com/api/2/public/'+action);
+			//const response = await d3.json('https://api.hitbtc.com/api/2/public/'+action);
+			const options = {
+				uri: 'https://api.hitbtc.com/api/2/public/' + action,
+				json: true
+			};
+			const response = await req(options);
 			return await response;
 		} catch (err) {
 			const problem = 'Nepovedlo se nacist public/' + action + ' ';

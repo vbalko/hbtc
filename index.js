@@ -20,8 +20,10 @@
 
 const express = require('./services/express');
 const api = require('./api');
+const ctrl = require('./api/controller');
 const mongoose = require('./services/mongoose');
 const mongoConfig = require('./config').mongo;
+const expressPort = require('./config').port;
 
 const app = express(api,__dirname);
 console.log(mongoConfig.uri);
@@ -35,7 +37,15 @@ mongoose.Promise = global.Promise;
 //app.use(express.bodyParser());
 
 
-app.listen(4000);
-console.log('Listening on port 4000');
+/*
+const h = require('./services/exchanges/hitbtc');
+const oH = new h();
+//oH.get('ticker').then( a => console.log(a));
+oH.getTickers().then( a => console.log(a));
+*/
 
+app.listen(expressPort);
+console.log('Listening on port ',expressPort);
+
+setInterval(() => ctrl.utils.refreshTickers(),10*60*1000);
 

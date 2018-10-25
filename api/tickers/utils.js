@@ -19,7 +19,7 @@ const util = {
 			const tickerFromDb = await tickersModel.findOne({ symbol: ticker.symbol });
 			//console.log('fromDb: ',tickerFromDb);
 			if (tickerFromDb) {
-				console.log('!!!Symbol ', ticker.symbolExt, ' existuje v db - delam update');
+				//console.log('!!!Symbol ', ticker.symbolExt, ' existuje v db - delam update');
 				// check timestamp if update is necessary. 
 				if (new Date(tickerFromDb.lastTickerTimestamp) < new Date(ticker.timestamp)) {
 					const aDataRaw = tickerFromDb.dataRaw;
@@ -32,12 +32,12 @@ const util = {
 						}
 					);
 					if (oUpdateRes) {
-						console.log('!!!Symbol ', ticker.symbolExt, ' updatovany v db');
+						//console.log('!!!Symbol ', ticker.symbolExt, ' updatovany v db');
 					}					
 				} else {
 					//if update is not necessary
-					console.log('TS from DB: ', tickerFromDb.lastTickerTimestamp, ' TS from API: ',ticker.timestamp);
-					console.log('!!!Symbol ', ticker.symbolExt, ' neni potrebne updatovat. Stejny timestamp');
+					//console.log('TS from DB: ', tickerFromDb.lastTickerTimestamp, ' TS from API: ',ticker.timestamp);
+					//console.log('!!!Symbol ', ticker.symbolExt, ' neni potrebne updatovat. Stejny timestamp');
 				}
 
 
@@ -46,7 +46,7 @@ const util = {
 				//if it does not exist create one
 				const fromDbCr = await tickersModel.create(util.convertToDBTicker(await ticker));
 				if (fromDbCr) {
-					console.log('!!!Symbol ', fromDbCr.symbolExt, ' vytvoreny v db');
+					//console.log('!!!Symbol ', fromDbCr.symbolExt, ' vytvoreny v db');
 				}
 			}
 		} catch (err) {

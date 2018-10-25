@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 const config = {
 	all: {
 		env: process.env.NODE_ENV || 'development',
-		port: process.env.port || 4000,
+		port: process.env.PORT || 4000,
 		apiRoot: process.env.apiRoot || '/',
 		logDir: 'log',
 		masterKey: requireProcessEnv('MASTER_KEY'),

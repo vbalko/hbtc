@@ -6,10 +6,6 @@ const oHitBTC = new hitbtc();
 
 //ROOT
 router.get('/api',async (req,res) => res.json(
-// async function getRawData() {
-	//await d3.json("https://api.hitbtc.com/api/2/public/ticker")//;
-	//    return await tickers;
-// }
 	await oHitBTC.getTickers()
 	// await getData()
 ));
