@@ -6,8 +6,9 @@
 		<pages>
 			<Page id="page" title="{i18n>title}">
 				<content>
-					<Table items="{/}"
-						   title="Symbols">
+					<Table  items="{/}"
+						 	visibleRowCount="7"
+						    title="Symbols">
 						<columns>
 							<Column>
 								<Text text="Symbol" wrapping="false" />                               
