@@ -1,6 +1,7 @@
 // const d3 = require('d3-fetch');
 const req = require('request-promise');
 const tickersUtils = require('../../api/tickers/utils');
+const ticker2Utils = require('../../api/tickers2/utils');
 
 
 class HitBTC {
@@ -29,7 +30,7 @@ class HitBTC {
 		}		
 	}
 
-	async getTickers() {
+	async getTickers(version) {
 		try {
 			const tickers = await this.get('ticker');
 			const aSymbols = await tickers.
@@ -38,7 +39,11 @@ class HitBTC {
 					item.symbolExt = item.symbol.indexOf('ETH') == 0 ? item.symbol.replace('ETH', 'ETH/') : item.symbol.replace('ETH', '/ETH');
 					return item;
 				});
-			tickersUtils.processTickers(aSymbols);
+			if (version == 1) {
+				tickersUtils.processTickers(aSymbols);
+			} else {
+				ticker2Utils.processTickers(aSymbols);
+			}
 			return await aSymbols;			
 		} catch (err) {
 			const problem = 'Problem: hitbtc.js getTickers '+err;

@@ -8,9 +8,16 @@ const api = {
 		* service used for syncing regularly
 		*/
 		refreshTickers : async () => {
-            console.log('Zpracovavam tickery');
-            await oHitBTC.getTickers();
-		}
+			console.log('Zpracovavam tickery');
+			await oHitBTC.getTickers();
+		},
+		/*
+		* service used for syncing regularly
+		*/
+		refreshTickers2: async () => {
+			console.log('Zpracovavam tickery 2');
+			await oHitBTC.getTickers(2);
+		},		
 	}
 };
 

@@ -26,7 +26,7 @@ const mongoConfig = require('./config').mongo;
 const expressPort = require('./config').port;
 
 const app = express(api,__dirname);
-console.log(mongoConfig.uri);
+//console.log(mongoConfig.uri);
 mongoose.connect(mongoConfig.uri, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
@@ -46,6 +46,6 @@ oH.getTickers().then( a => console.log(a));
 
 app.listen(expressPort);
 console.log('Listening on port ',expressPort);
-
-setInterval(() => ctrl.utils.refreshTickers(),10*60*1000);
+ctrl.utils.refreshTickers2();
+setInterval(() => ctrl.utils.refreshTickers2(),1*60*1000);
 
