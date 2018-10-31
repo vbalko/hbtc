@@ -9,14 +9,14 @@ const api = {
 		*/
 		refreshTickers : async () => {
 			console.log('Zpracovavam tickery');
-			await oHitBTC.getTickers();
+			await oHitBTC.processTickers(1);
 		},
 		/*
 		* service used for syncing regularly
 		*/
 		refreshTickers2: async () => {
 			console.log('Zpracovavam tickery 2');
-			await oHitBTC.getTickers(2);
+			await oHitBTC.processTickers(2);
 		},		
 	}
 };

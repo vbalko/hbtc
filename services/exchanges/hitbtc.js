@@ -30,7 +30,7 @@ class HitBTC {
 		}		
 	}
 
-	async getTickers(version) {
+	async processTickers(version) {
 		try {
 			const tickers = await this.get('ticker');
 			const aSymbols = await tickers.
@@ -44,6 +44,23 @@ class HitBTC {
 			} else {
 				ticker2Utils.processTickers(aSymbols);
 			}
+			return await aSymbols;
+		} catch (err) {
+			const problem = 'Problem: hitbtc.js processTickers ' + err;
+			//eslint-disable-next-line no-console
+			console.log('problem: ', problem);
+			return { 'problem': problem };
+		}		
+	}
+	async getTickers() {
+		try {
+			const tickers = await this.get('ticker');
+			const aSymbols = await tickers.
+				filter((item) => item.symbol.includes('ETH')).
+				map((item) => {
+					item.symbolExt = item.symbol.indexOf('ETH') == 0 ? item.symbol.replace('ETH', 'ETH/') : item.symbol.replace('ETH', '/ETH');
+					return item;
+				});
 			return await aSymbols;			
 		} catch (err) {
 			const problem = 'Problem: hitbtc.js getTickers '+err;

@@ -51,9 +51,11 @@ const ticker2Schema = new Schema(
 
 const ticker2HeaderModel = mongoose.model('Ticker2Header',ticker2HeaderSchema);
 const ticker2Model       = mongoose.model('Ticker2', ticker2Schema);
+const ticker2_5mModel    = mongoose.model('Ticker5m', ticker2Schema);
 
 exports.t2hSchema = ticker2HeaderModel.schema;
 exports.t2Schema  = ticker2Model.schema;
 exports.t2hModel  = ticker2HeaderModel;
 exports.t2Model   = ticker2Model;
+exports.t5mModel  = ticker2_5mModel;
 
