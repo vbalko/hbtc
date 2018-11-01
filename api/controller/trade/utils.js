@@ -1,16 +1,16 @@
 const ts2Model = require('../../tickers2/model');
-
+const logger = require('../../../services/winston');
 // const ts2hModel = ts2Model.t2hModel;
 // const ts2DataModel  = ts2Model.t2Model;
 // const ts5mModel = ts2Model.t5mModel;
 
 
 const util = {
-	pt : async (idx) => {
+	pt: async (idx) => {
 		let cnt = 0;
 		const headers = await ts2Model.t2hModel.find({});
 		let a5mArrays = await util.passTo5minHeader(headers[idx]);
-		console.log(`PT: Processing ${headers[idx].symbolExt}...`);
+		logger.debug(`PT: Processing ${headers[idx].symbolExt}...`);
 		// const timestamp24h = new Date("2018-10-26T22:37:18.949Z");
 		//const timestamp24h = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
 		//const olderTickers = await  ts2Model.t2Model.find({ symbol: headers[0].symbol, timestamp: { $lte: timestamp24h } });
@@ -35,59 +35,73 @@ const util = {
 				}
 			}
 		}
-		console.log(`Processed ${headers[idx].symbolExt}: Added ${a5mArrays["resArrays"].length} items, removed ${cnt} items.`);
+		logger.info(`Processed ${headers[idx].symbolExt}: Added ${a5mArrays['resArrays'].length} items, removed ${cnt} items.`);
 	},
-	passTo5min : async () => {
+	passTo5min: async () => {
 		let cnt = 0;
 		//get all headers
 		const headers = await ts2Model.t2hModel.find({});
 		//process every header one by one
 		for (let tickerHeader of headers) {
-			console.log(`Processing ${tickerHeader.symbolExt}...`);
+			logger.info(`Processing ${tickerHeader.symbolExt}...`);
 			//prepare arrays of tickers in 5m slices
 			let a5mArrays = await util.passTo5minHeader(tickerHeader);
 			//create 5m average of all values (timestamp from the 1st ticker of array)
+			let cntErr = 0; //number of errors occured 
 			for (let a of a5mArrays['resArrays']) {
 				//create an average ticker
 				let avTicker = util.prepareAverageTicker(a);
 				//add average ticker to the db
 				//TODO: add try catch to check if record already exists
-				let cr5m = await ts2Model.t5mModel.create(avTicker);
-				//if create was succesfull - remove source records
-				//remove processed tickers from 1m db (a5mArrays[tickers2remove])
-				if (cr5m) {
-					//create array of indexes to remove
-					let aRemove = a.map(item => item.timestamp);
-					cnt += aRemove.length;
-					let removed = await ts2Model.t2Model.deleteMany(
-						{
-							symbol:	a5mArrays.header.symbol,
-							timestamp: {
-								$in: aRemove
+				try {
+
+					let cr5m = await ts2Model.t5mModel.create(avTicker);
+					//if create was succesfull - remove source records
+					//remove processed tickers from 1m db (a5mArrays[tickers2remove])
+					if (cr5m) {
+						//create array of indexes to remove
+						let aRemove = a.map(item => item.timestamp);
+						cnt += aRemove.length;
+						let removed = await ts2Model.t2Model.deleteMany(
+							{
+								symbol: a5mArrays.header.symbol,
+								timestamp: {
+									$in: aRemove
+								}
 							}
+						);
+						if (removed) {
+							//TODO: check
 						}
-					);
-					if (removed) {
-						//TODO: check
 					}
+				} catch (error) {
+					logger.error(`ERR: ${error}.`);
+					cntErr++;
+					if (cntErr >= 5) {
+						break;
+					}
+					
+					//throw new Error(error.message);
 				}
 			}
-			
 			//exampleSite.deleteMany({ userUID: uid, id: { $in: [10, 2, 3, 5]}}, function(err) {})
-			console.log(`Processed ${tickerHeader.symbolExt}: added ${a5mArrays['resArrays'].length} items, removed ${cnt} items.`);
+			if (cntErr < 5) {
+				logger.info(`Processed ${tickerHeader.symbolExt}: added ${a5mArrays['resArrays'].length} items, removed ${cnt} items.`);			
+			}
+			
 		}
 	},
 
-	prepareAverageTicker : (subArray) => {
+	prepareAverageTicker: (subArray) => {
 		//prepare metadata
 		const avTicker = {
-			'symbol' : subArray[0].symbol,
-			'timestamp' : subArray[0].timestamp,
-			'ask' : 0,
-			'bid' : 0,
+			'symbol': subArray[0].symbol,
+			'timestamp': subArray[0].timestamp,
+			'ask': 0,
+			'bid': 0,
 			'last': 0,
 			'open': 0,
-			'low' : 0,
+			'low': 0,
 			'high': 0,
 			'volume': 0,
 			'volumeQuote': 0
@@ -116,11 +130,11 @@ const util = {
 		//return average ticker
 		return avTicker;
 	},
-	passTo5minHeader : async (header) => {
+	passTo5minHeader: async (header) => {
 		//select all tickers older than 24 hours
 		//compute timestamp - 24h
 		const timestamp24h = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-		const olderTickers = await ts2Model.t2Model.find({symbol:header.symbol, timestamp : {$lte : timestamp24h}},{},{timestamp:'asc'});
+		const olderTickers = await ts2Model.t2Model.find({ symbol: header.symbol, timestamp: { $lte: timestamp24h } }, {}, { timestamp: 'asc' });
 		//get tickers from last 5 mins and compute average
 		//create subarrays containing tickers in 5 min slices
 		const resArrays = []; //result array of 5 min subarrays
@@ -143,9 +157,9 @@ const util = {
 		//last subarray (probably incomplete) will not be added to resArrays (array for further processing)
 		// resArrays.push(resSubarray);
 		return {
-			'header':header,
-			'resArrays':resArrays,
-			'tickers2remove':tickers2remove
+			'header': header,
+			'resArrays': resArrays,
+			'tickers2remove': tickers2remove
 		};
 	}
 

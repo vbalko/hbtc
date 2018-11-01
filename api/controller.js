@@ -1,4 +1,5 @@
 const hitBTC = require('../services/exchanges/hitbtc');
+const logger = require('../services/winston');
 
 const oHitBTC = new hitBTC();
 
@@ -8,14 +9,14 @@ const api = {
 		* service used for syncing regularly
 		*/
 		refreshTickers : async () => {
-			console.log('Zpracovavam tickery');
+			logger.info('Zpracovavam tickery');
 			await oHitBTC.processTickers(1);
 		},
 		/*
 		* service used for syncing regularly
 		*/
 		refreshTickers2: async () => {
-			console.log('Zpracovavam tickery 2');
+			logger.info('Zpracovavam tickery 2');
 			await oHitBTC.processTickers(2);
 		},		
 	}

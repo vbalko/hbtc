@@ -1,11 +1,12 @@
 const model = require('./model');
+const logger = require('../../services/winston');
 
 const util = {
 	processTickers: async (tickers) => {
 		for (let ticker of tickers) {
 			await util.processOneTicker(ticker);
 		}
-		console.log(`Zpracovano ${tickers.length} zaznamu.`);
+		logger.info(`Zpracovano ${tickers.length} zaznamu.`);
 	},    
 	processOneTicker : async (ticker) => {
 		//look if record with actual symbol is in db
@@ -26,7 +27,7 @@ const util = {
 					// }
 				}
 			} else {
-				console.log('err: neexistuje v db ', ticker.symbolExt, ' Vytvarim novy zaznam.');
+				logger.info('err: neexistuje v db ', ticker.symbolExt, ' Vytvarim novy zaznam.');
 				//if it does not exist create one
 				const fromDBCr = await model.t2hModel.create(util.convertToDBT2H(await ticker));
 				// if (fromDBCr) {
@@ -41,7 +42,7 @@ const util = {
             
 
 		} catch (err) {
-			console.log('err: Chyba vytvoreni zaznamu v db ', ticker.symbolExt, ' ', err);
+			logger.error('err: Chyba vytvoreni zaznamu v db ', ticker.symbolExt, ' ', err);
 
 		}
 	},

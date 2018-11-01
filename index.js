@@ -19,6 +19,7 @@
 //const express = require('express');
 
 const express = require('./services/express');
+const logger = require('./services/winston');
 const api = require('./api');
 const ctrl = require('./api/controller');
 const mongoose = require('./services/mongoose');
@@ -46,13 +47,13 @@ oH.getTickers().then( a => console.log(a));
 */
 
 app.listen(expressPort);
-console.log('Listening on port ',expressPort);
+logger.info('Listening on port ',expressPort);
 ctrl.utils.refreshTickers2();
 setInterval(() => ctrl.utils.refreshTickers2(),1*60*1000);
 
 
 //every 30 min pass 1m tickers to 5m average tickers
-//tradeUtil.passTo5min().then(() => console.log('Finished processing...'));
-setInterval(() => tradeUtil.passTo5min().then(()=>console.log('Finished processing...')),30*60*1000);
+//tradeUtil.passTo5min().then(() => logger.info('Finished processing...'));
+setInterval(() => tradeUtil.passTo5min().then(()=>logger.info('Finished processing...')),30*60*1000);
 //tradeUtil.pt(0).then(() => console.log('Finished processing...'));
 

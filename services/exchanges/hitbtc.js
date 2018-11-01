@@ -1,5 +1,6 @@
 // const d3 = require('d3-fetch');
 const req = require('request-promise');
+const logger = require('../winston');
 const tickersUtils = require('../../api/tickers/utils');
 const ticker2Utils = require('../../api/tickers2/utils');
 
@@ -25,7 +26,7 @@ class HitBTC {
 		} catch (err) {
 			const problem = 'Nepovedlo se nacist public/' + action + ' ';
 			//eslint-disable-next-line no-console
-			console.log('problem: ', problem + err);
+			logger.error('problem: ', problem + err);
 			return { problem: problem + err };
 		}		
 	}
@@ -48,7 +49,7 @@ class HitBTC {
 		} catch (err) {
 			const problem = 'Problem: hitbtc.js processTickers ' + err;
 			//eslint-disable-next-line no-console
-			console.log('problem: ', problem);
+			logger.error('problem: ', problem);
 			return { 'problem': problem };
 		}		
 	}
@@ -65,7 +66,7 @@ class HitBTC {
 		} catch (err) {
 			const problem = 'Problem: hitbtc.js getTickers '+err;
 			//eslint-disable-next-line no-console
-			console.log('problem: ', problem);
+			logger.error('problem: ', problem);
 			return { 'problem': problem };
 		}
 		

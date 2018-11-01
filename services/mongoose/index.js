@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const logger = require('../winston');
 
 const mongo = require('../../config').mongo;
 
@@ -14,7 +15,7 @@ mongoose.Types.ObjectId.prototype.view = function () {
 
 /* istanbul ignore next */
 mongoose.connection.on('error', (err) => {
-	console.log('MongoDB connection error: ' + err);
+	logger.console.error('MongoDB connection error: ' + err);
 	process.exit(-1);
 });
 

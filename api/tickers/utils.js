@@ -1,4 +1,5 @@
 const tickersModel = require('./model');
+const logger = require('../../services/winston');
 //const tickerController = require('./controller');
 
 
@@ -42,7 +43,7 @@ const util = {
 
 
 			} else {
-				console.log('err: neexistuje v db ', ticker.symbolExt, ' Vytvarim novy zaznam.');
+				logger.error('err: neexistuje v db ', ticker.symbolExt, ' Vytvarim novy zaznam.');
 				//if it does not exist create one
 				const fromDbCr = await tickersModel.create(util.convertToDBTicker(await ticker));
 				if (fromDbCr) {
@@ -50,7 +51,7 @@ const util = {
 				}
 			}
 		} catch (err) {
-			console.log('err: Chyba vytvoreni zaznamu v db ', ticker.symbolExt, ' ', err);
+			logger.error('err: Chyba vytvoreni zaznamu v db ', ticker.symbolExt, ' ', err);
 	
 		}
 		
