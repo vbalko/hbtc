@@ -1,23 +1,3 @@
-//const d3 = require('d3-fetch');
-// if (typeof fetch !== "function") {
-//   global.fetch = require("node-fetch-polyfill");
-// }
-
-// async function getRawData() {
-//     const tickers = await d3
-//       .json("https://api.hitbtc.com/api/2/public/ticker");
-//       return await tickers;
-// }
-
-// async function aa() {
-//     const arr = await getRawData();
-//     console.log(arr.map(item => {return {"symbol":item.symbol,"ask":item.ask,"bid":item.bid}}));
-// }
-
-//aa();
-
-//const express = require('express');
-
 const express = require('./services/express');
 const logger = require('./services/winston');
 const api = require('./api');

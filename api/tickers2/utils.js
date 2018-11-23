@@ -6,7 +6,7 @@ const util = {
 		for (let ticker of tickers) {
 			await util.processOneTicker(ticker);
 		}
-		logger.info(`Zpracovano ${tickers.length} zaznamu.`);
+		logger.info(`${new Date()} Zpracovano ${tickers.length} zaznamu.`);
 	},    
 	processOneTicker : async (ticker) => {
 		//look if record with actual symbol is in db

@@ -22,6 +22,12 @@ const config = {
 		apiRoot: process.env.apiRoot || '/',
 		logDir: 'log',
 		masterKey: requireProcessEnv('MASTER_KEY'),
+		db: 'dynamoDB', //or mongoDB
+		dynamoDB: {
+			uri: requireProcessEnv('DYNAMODB_URI'),
+			region: requireProcessEnv('DYNAMODB_REGION'),
+
+		},
 		// ib: {
 		//     publicKey: requireProcessEnv("IB_PUBLIC"),
 		//     privateKey: requireProcessEnv("IB_PRIVATE")

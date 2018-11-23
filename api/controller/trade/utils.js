@@ -35,15 +35,16 @@ const util = {
 				}
 			}
 		}
-		logger.info(`Processed ${headers[idx].symbolExt}: Added ${a5mArrays['resArrays'].length} items, removed ${cnt} items.`);
+		logger.info(`${new Date()} Processed ${headers[idx].symbolExt}: Added ${a5mArrays['resArrays'].length} items, removed ${cnt} items.`);
 	},
 	passTo5min: async () => {
 		let cnt = 0;
 		//get all headers
 		const headers = await ts2Model.t2hModel.find({});
 		//process every header one by one
+		logger.info(`${new Date()} 5 min aggregation started...`);
 		for (let tickerHeader of headers) {
-			logger.info(`Processing ${tickerHeader.symbolExt}...`);
+			logger.info(`${new Date()} Processing ${tickerHeader.symbolExt}...`);
 			//prepare arrays of tickers in 5m slices
 			let a5mArrays = await util.passTo5minHeader(tickerHeader);
 			//create 5m average of all values (timestamp from the 1st ticker of array)
@@ -86,7 +87,7 @@ const util = {
 			}
 			//exampleSite.deleteMany({ userUID: uid, id: { $in: [10, 2, 3, 5]}}, function(err) {})
 			if (cntErr < 5) {
-				logger.info(`Processed ${tickerHeader.symbolExt}: added ${a5mArrays['resArrays'].length} items, removed ${cnt} items.`);			
+				logger.info(`${new Date()} Processed ${tickerHeader.symbolExt}: added ${a5mArrays['resArrays'].length} items, removed ${cnt} items.`);			
 			}
 			
 		}

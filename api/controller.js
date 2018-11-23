@@ -16,7 +16,7 @@ const api = {
 		* service used for syncing regularly
 		*/
 		refreshTickers2: async () => {
-			logger.info('Zpracovavam tickery 2');
+			logger.info(`${new Date()} Zpracovavam tickery 2`);
 			await oHitBTC.processTickers(2);
 		},		
 	}
