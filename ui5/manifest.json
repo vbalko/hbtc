@@ -1,7 +1,7 @@
 {
     "_version": "1.8.0",
     "sap.app": {
-        "id": "sap.ui.demo.basicTemplate",
+        "id": "space.balko.scalp",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -30,7 +30,7 @@
     },
     "sap.ui5": {
         "rootView": {
-            "viewName": "sap.ui.demo.basicTemplate.view.App",
+            "viewName": "space.balko.scalp.view.App",
             "type": "XML",
             "async": true,
             "id": "app"
@@ -51,7 +51,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "sap.ui.demo.basicTemplate.i18n.i18n"
+                    "bundleName": "space.balko.scalp.i18n.i18n"
                 }
             }
         },

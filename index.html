@@ -13,9 +13,27 @@
             data-sap-ui-theme="sap_belize"
             data-sap-ui-compatVersion="edge" 
             data-sap-ui-preload="async" 
-            data-sap-ui-resourceroots='{"sap.ui.demo.basicTemplate": "./ui5/"}'>
+            data-sap-ui-resourceroots='{"space.balko.scalp": "./ui5/"}'>
 
-        </script>
+		</script>
+		<!-- include polyfills for custom event, Symbol and Custom Elements -->
+		<!-- <script src="http://unpkg.com/babel-polyfill@6.26.0/dist/polyfill.js"></script>
+		<script src="http://unpkg.com/custom-event-polyfill@0.3.0/custom-event-polyfill.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.8.0/document-register-element.js"></script> -->
+
+		<!-- use babel so that we can use arrow functions and other goodness in this block! -->
+		<!-- <script src="http://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+
+		<!-- <script src="http://d3js.org/d3.v4.min.js"></script>
+		<script src="http://techanjs.org/techan.min.js"></script> -->
+		<!-- <script src="http://unpkg.com/d3fc@14.0.1"></script>
+		<script src="http://unpkg.com/d3@5.5.0"></script> -->
+<!-- <script src="https://unpkg.com/d3/build/d3.min.js"></script>
+<script src="https://unpkg.com/d3fc/build/d3fc.min.js"></script> -->
+
+<script src="node_modules/d3/dist/d3.min.js"></script>
+<script src="node_modules/d3fc/build/d3fc.min.js"></script>
+
 
     <link rel="stylesheet" type="text/css" href="ui5/css/style.css">
 
@@ -24,9 +42,9 @@
             new sap.m.Shell({
                 app: new sap.ui.core.ComponentContainer({
                     height: "100%",
-                    name: "sap.ui.demo.basicTemplate",
+                    name: "space.balko.scalp",
                     settings: {
-                        id: "basicTemplate"
+                        id: "scalp"
                     }
                 })
             }).placeAt("content");

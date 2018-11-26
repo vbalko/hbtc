@@ -49,6 +49,19 @@ const ticker2Schema = new Schema(
 	}
 );
 
+ticker2Schema.methods = {
+	view(full) {
+		let view = {};
+		let fields = ['symbol', 'last', 'timestamp'];
+		if (full) {
+			fields = [...fields, 'ask', 'bid', 'last', 'open', 'low', 'high', 'volume', 'volumeQuote'];
+		}
+		fields.forEach(field => { view[field] = this[field]; });
+
+		return view;
+	}
+};
+
 const ticker2HeaderModel = mongoose.model('Ticker2Header',ticker2HeaderSchema);
 const ticker2Model       = mongoose.model('Ticker2', ticker2Schema);
 const ticker2_5mModel    = mongoose.model('Ticker5m', ticker2Schema);

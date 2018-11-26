@@ -1,14 +1,30 @@
 const express = require('express');
+const ctrl = require('./controller');
 const hitbtc = require('../services/exchanges/hitbtc');
 
 const router = new express.Router();
 const oHitBTC = new hitbtc();
 
 //ROOT
-router.get('/api',async (req,res) => res.json(
-	await oHitBTC.getTickers()
-	// await getData()
-));
+router.get('/api', async (req, res) =>
+	res.json(
+		await oHitBTC.getTickers()
+		// await getData()
+	)
+);
+
+router.get('/api/:symbol/:period', async (req, res) =>
+	res.json(
+		//await ctrl.utils.get1mTickersBySymbol(req.params.symbol)
+		await oHitBTC.get(`candles/${req.params.symbol}?period=${req.params.period}`)
+	)
+);
+
+router.get('/api/symbols', async (req,res) =>
+	res.json(
+		(await oHitBTC.get('symbol')).filter(s => s.baseCurrency == 'ETH' || s.quoteCurrency == 'ETH')
+	)
+);
 
 // async function getData() {
 // 	try {
@@ -23,7 +39,6 @@ router.get('/api',async (req,res) => res.json(
 // 		console.log('problem: ',problem+err);
 // 		return {'problem':problem+err};
 // 	}
-
 
 // }
 

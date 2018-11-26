@@ -1,39 +1,52 @@
-<mvc:View controllerName="sap.ui.demo.basicTemplate.controller.App" 
+<mvc:View controllerName="space.balko.scalp.controller.App" 
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" 
 	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:scalp="space.balko.scalp.control"
 	xmlns:t="sap.ui.table">
 	<App>
 		<pages>
 			<Page id="page" title="{i18n>title}">
 				<content>
-					<Table  items="{/}"
-						 	visibleRowCount="7"
-						    title="Symbols">
-						<columns>
-							<Column>
-								<Text text="Symbol" wrapping="false" />                               
-							</Column>
-							<Column>
-								<Text text="Price" wrapping="false" />
-							</Column>
-							<Column>
-								<Text text="Volume" wrapping="false" />
-							</Column>                            
-						</columns>
-						<items>
-							<ColumnListItem>
-								<cells>
-									<Text text="{symbolExt}" />
-								</cells>
-								<cells>
-									<Text text="{last}" />
-								</cells>
-								<cells>
-									<Text text="{volume}" />
-								</cells>                                                                 
-							</ColumnListItem>
-						</items>
-					</Table>
+					<VBox>
+						<HBox>
+							<ComboBox items="{symbols>/}" selectedKey="{util>/symbol}">
+								<core:Item key="{symbols>id}" text="{symbols>id}" />
+							</ComboBox>
+							<ComboBox items="{periods>/}" selectedKey="{util>/period}">
+								<core:Item key="{periods>period}" text="{periods>text}" />
+							</ComboBox>
+						</HBox>
+						<VBox id="cont">
+							<scalp:d3fc title='' chartDataUrl='api/{util>/symbol}/{util>/period}'></scalp:d3fc>
+						</VBox>
+<!-- <Table items="{/}" visibleRowCount="7" title="Symbols">
+	<columns>
+		<Column>
+			<Text text="Symbol" wrapping="false" />
+		</Column>
+		<Column>
+			<Text text="Price" wrapping="false" />
+		</Column>
+		<Column>
+			<Text text="Volume" wrapping="false" />
+		</Column>
+	</columns>
+	<items>
+		<ColumnListItem>
+			<cells>
+				<Text text="{symbolExt}" />
+			</cells>
+			<cells>
+				<Text text="{last}" />
+			</cells>
+			<cells>
+				<Text text="{volume}" />
+			</cells>
+		</ColumnListItem>
+	</items>
+</Table>						 -->
+					</VBox>
 				</content>
 			</Page>
 		</pages>

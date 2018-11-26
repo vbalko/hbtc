@@ -28,12 +28,17 @@ oH.getTickers().then( a => console.log(a));
 
 app.listen(expressPort);
 logger.info('Listening on port ',expressPort);
-ctrl.utils.refreshTickers2();
-setInterval(() => ctrl.utils.refreshTickers2(),1*60*1000);
+
+if (false) {
+	ctrl.utils.refreshTickers2();
+	setInterval(() => ctrl.utils.refreshTickers2(),1*60*1000);
 
 
-//every 30 min pass 1m tickers to 5m average tickers
-//tradeUtil.passTo5min().then(() => logger.info('Finished processing...'));
-setInterval(() => tradeUtil.passTo5min().then(()=>logger.info('Finished processing...')),30*60*1000);
+	//every 30 min pass 1m tickers to 5m average tickers
+	//tradeUtil.passTo5min().then(() => logger.info('Finished processing...'));
+	setInterval(() => tradeUtil.passTo5min().then(()=>logger.info('Finished processing...')),30*60*1000);
 //tradeUtil.pt(0).then(() => console.log('Finished processing...'));
+} else {
+	//ctrl.utils.test().then(data => console.log(data));
+}
 

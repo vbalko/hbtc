@@ -5,3 +5,5 @@ Dockerfile
 .openode
 .gitignore
 /log
+/.env
+.env

@@ -6,6 +6,9 @@ const logger = require('../../../services/winston');
 
 
 const util = {
+	//pass to 5 min - function takes all tickers older than 24 h from now
+	//makes array of arrays of tickers in 5 min intervals
+	//makes average value of each tickers in 5 min intervals
 	pt: async (idx) => {
 		let cnt = 0;
 		const headers = await ts2Model.t2hModel.find({});
